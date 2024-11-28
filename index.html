@@ -45,6 +45,12 @@
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
+
+        // Add a sphere (globe)
+        const geometry = new THREE.SphereGeometry( 30, 32, 32 );
+        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const globe = new THREE.Mesh( geometry, material );
+        scene.add(globe);
  
         // call animation/rendering loop
         animate();
@@ -53,9 +59,9 @@
 
       function animate() {
 
-        requestAnimationFrame( animate );
+        requestAnimationFrame( animate ); // Create a smooth animation loop
 
-        // and here..
+        renderer.render(scene, camera); // Render the scene
         
       };
     </script>
