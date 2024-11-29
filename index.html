@@ -133,7 +133,7 @@
             let { country, rate, lat, lon } = point;
             let position = latLongToVector3(lat, lon, 40); // 40 radius for positioning
             let size = (rate / 10) * 2; // Scale size of marker based on rate
-            let color = new THREE.Color(rate / 10, 1 - rate / 10, 0); // Set color from green to red (depends on state)
+            let color = getColorForDepressionRate(rate); // Set color from green to red (depends on state)
 
             // Create marker as a small sphere
             let sphere = new THREE.Mesh(
@@ -144,6 +144,17 @@
             sphere.position.copy(position);
             scene.add(sphere);
           });
+        }
+
+        // A Function to get color based on depression rate
+        function getColorForDepressionRate(rate) {
+            if (rate >= 7) {
+                return 0xff0000; // Red for high rates
+            } else if (rate >= 6) {
+                return 0xffff00; // Yellow for medium rates
+            } else {
+                return 0x00ff00; // Green for low rates
+            }
         }
 
         // Load the markers and start animation
