@@ -123,6 +123,28 @@
           return new THREE.Vector3(x, y, z);
         }
 
+        // Add data points (markers) to the globe based on depressive rates
+        function addDepressiveMarkers() {
+          depressiveData.forEach(point => {
+            let { country, rate, lat, lon } = point;
+            let position = latLongToVector3(lat, lon, 40); // 40 radius for positioning
+            let size = (rate / 10) * 2; // Scale size of marker based on rate
+            let color = new THREE.Color(rate / 10, 1 - rate / 10, 0); // Set color from green to red (depends on state)
+
+            // Create marker as a small sphere
+            let sphere = new THREE.Mesh(
+              new THREE.SphereGeometry(size, 8, 8),
+              new THREE.MeshBasicMaterial({ color: color })
+            );
+
+            sphere.position.copy(position);
+            scene.add(sphere);
+          });
+        }
+
+        // Load the markers and start animation
+        addDepressiveMarkers();
+
         // call animation/rendering loop
         animate();
         
