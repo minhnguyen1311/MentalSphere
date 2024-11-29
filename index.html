@@ -53,6 +53,10 @@
         const material = new THREE.MeshBasicMaterial({ map: globeTexture });
         const globe = new THREE.Mesh( geometry, material );
         scene.add(globe);
+
+        // Add the new image as any background we want
+        const backgroundTexture = textureLoader.load('space.jpg');
+        scene.background = backgroundTexture;
  
         // Set up the orbit controls (mouse interaction)
         controls = new OrbitControls( camera, renderer.domElement ); 
@@ -161,21 +165,6 @@
   </head>
 
   <body>
-    <div id="title-container">
-        <h1> The Mental Sphere </h1>
-    </div>
-    <style>
-        #title-container {
-            position: absolute;
-            top: 35px; /* Distance from the top of the page */
-            left: 50%; /* Stays in the middle */
-            transform: translateX(-50%);
-            text-align: center;
-            font-family: 'Georgia', serif;
-            font-size: 24px;
-            color: #297ec4;
-        }
-    </style>
   </body>
 
 </html>
