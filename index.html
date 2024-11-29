@@ -57,6 +57,7 @@
         // Set up the orbit controls (mouse interaction)
         controls = new OrbitControls( camera, renderer.domElement ); 
         controls.enableDamping = true; // Smooth camera movements
+        controls.enablePan = false; // Disable panning with the right mouse click
 
         // call animation/rendering loop
         animate();
