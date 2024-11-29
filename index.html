@@ -136,6 +136,7 @@
               new THREE.SphereGeometry(size, 8, 8),
               new THREE.MeshBasicMaterial({ color: color })
             );
+            
             sphere.position.copy(position);
             scene.add(sphere);
           });
@@ -158,5 +159,23 @@
       };
     </script>
   </head>
-  <body></body>
+
+  <body>
+    <div id="title-container">
+        <h1> The Mental Sphere </h1>
+    </div>
+    <style>
+        #title-container {
+            position: absolute;
+            top: 35px; /* Distance from the top of the page */
+            left: 50%; /* Stays in the middle */
+            transform: translateX(-50%);
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            color: #297ec4;
+        }
+    </style>
+  </body>
+
 </html>
