@@ -22,23 +22,22 @@
         justify-content: flex-start; /* Aligns items at the top */
       }
 
-      .green-circle-container {
-          display: flex;        /* Aligns circle and text horizontally */
-          align-items: center;  /* Vertically centers the text with the circle */
-          margin-bottom: 10px;  /* Adds space between items */
+      .circle-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
       }
 
-      .green-circle {
+      .circle {
           width: 50px;
           height: 50px; 
-          background-color: #00ff00;
           border-radius: 50%; 
-          margin-right: 30px;   /* Space between the circle and the text */
+          margin-right: 20px;   /* Space between the circle and the text */
       }
 
-      .green-circle-text {
+      .circle-text {
           color: white;
-          font-size: 30px;
+          font-size: 19px;
       }
     
     </style>
@@ -363,11 +362,21 @@
   <body>
 
     <div id="sidebar">
-      <div class="green-circle-container">
-          <div class="green-circle"></div>  <!-- Green circle -->
-          <div class="green-circle-text"> <= 5% </div>  <!-- Text next to the circle -->
+      <div class="circle-container">
+        <div class="circle" style="background-color: #00ff00;"></div>
+        <div class="circle-text"> Rate <= 5% </div>
       </div>
-  </div>
+
+      <div class="circle-container">
+        <div class="circle" style="background-color: #ffff00;"></div>
+        <div class="circle-text"> 5% < Rate < 7% </div>
+      </div>
+
+      <div class="circle-container">
+        <div class="circle" style="background-color: #ff0000;"></div>
+        <div class="circle-text"> Rate >= 7% </div>
+      </div>
+    </div>
 
   </body>
 
