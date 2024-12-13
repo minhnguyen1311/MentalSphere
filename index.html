@@ -22,6 +22,13 @@
         justify-content: flex-start; /* Aligns items at the top */
       }
 
+      .sidebar-title {
+        color: white;
+        font-size: 19px;
+        padding: 20px;
+        text-align: center;
+      }
+
       .circle-container {
         display: flex;
         align-items: center;
@@ -362,6 +369,10 @@
   <body>
 
     <div id="sidebar">
+      <div class="sidebar-title">
+        Depression Rate by Color
+      </div>
+
       <div class="circle-container">
         <div class="circle" style="background-color: #00ff00;"></div>
         <div class="circle-text"> Rate <= 5% </div>
