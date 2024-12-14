@@ -296,21 +296,79 @@
 
         // Add data points (markers) to the globe based on depressive rates
         function addDepressiveMarkers() {
+          let highRateCountries = depressiveData.filter(point => point.rate >= 7); // Filter countries with high rates
+
+          // Loop through each pair of countries to draw lines between them
+          highRateCountries.forEach((point1, index1) => {
+            let position1 = latLongToVector3(point1.lat, point1.lon, 40); // 3D position of the first country
+              
+            highRateCountries.forEach((point2, index2) => {
+                if (index1 === index2) return; // Skip if it's the same country
+
+                let position2 = latLongToVector3(point2.lat, point2.lon, 40); // 3D position of the second country
+
+                // Draw curved line between these two points
+                drawCurvedLine(position1, position2);
+            });
+          });
+
+          // Draw markers for "all" remaining countries based on their depression rates
           depressiveData.forEach(point => {
-            let { country, rate, lat, lon } = point;
-            let position = latLongToVector3(lat, lon, 40); // 40 radius for positioning
-            let size = (rate / 10) * 1.2; // Scale size of marker based on rate
-            let color = getColorForDepressionRate(rate); // Set color from green to red (depends on state)
+            let position = latLongToVector3(point.lat, point.lon, 40); // 40 radius for positioning
+            let size = (point.rate / 10) * 1.2; // Scale size of marker based on rate
+            let color = getColorForDepressionRate(point.rate); // Set color from green to red (depends on state)
 
             // Create marker as a small sphere
             let sphere = new THREE.Mesh(
               new THREE.SphereGeometry(size, 8, 8),
               new THREE.MeshBasicMaterial({ color: color })
             );
-            
+
             sphere.position.copy(position);
             scene.add(sphere);
           });
+        }
+
+        // Function to draw a curved line between two points on the globe using spherical interpolation
+        function drawCurvedLine(start, end) {
+          let numSegments = 50; // Calculate the number of segments for the curve
+
+          // Convert start and end points to normalized vectors (unit vectors)
+          start.normalize();
+          end.normalize();
+
+          // Create an array to hold the points on the curved line
+          let points = [];
+
+          // Calculate the midpoint, but "push" it above the sphere by a factor of 1.5
+          let midpoint = new THREE.Vector3(
+              (start.x + end.x) / 2,
+              (start.y + end.y) / 2,
+              (start.z + end.z) / 2
+          );
+
+          // Normalize and then scale it outward from the sphere to create a stronger curve
+          midpoint.normalize().multiplyScalar(60);
+
+          // Add points along the great circle using spherical interpolation
+          for (let i = 0; i <= numSegments; i++) {
+              let t = i / numSegments; // Interpolation factor
+              let interpolatedVector = new THREE.Vector3().lerpVectors(start, end, t);
+
+              // Normalize the interpolated vector so that it's on the surface of the sphere
+              interpolatedVector.normalize().multiplyScalar(40); // 40: radius of the globe
+              points.push(interpolatedVector);
+          }
+
+          // Add the "lifted" midpoint to make the curve more pronounced
+          points.push(midpoint); // Push the elevated midpoint
+
+          // Create the line and add it to the scene
+          let geometry = new THREE.BufferGeometry().setFromPoints(points);
+          let material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+          let line = new THREE.Line(geometry, material);
+          
+          scene.add(line);
         }
 
         // A Function to get color based on depression rate
