@@ -88,7 +88,7 @@
         // Add a sphere (globe)
         const geometry = new THREE.SphereGeometry( 40, 32, 32 );
         const textureLoader = new THREE.TextureLoader(); // Loads a world map texture to wrap around the sphere.
-        const globeTexture = textureLoader.load('earth.jpg'); // The earth image must be 2:1 ratio to wrap around
+        const globeTexture = textureLoader.load('earth_2.jpg'); // The earth image must be 2:1 ratio to wrap around
         const material = new THREE.MeshBasicMaterial({ map: globeTexture });
         const globe = new THREE.Mesh( geometry, material );
         scene.add(globe);
